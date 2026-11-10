@@ -1,0 +1,21 @@
+spec: "1.1"
+devices:
+  MyOscilloscope:
+    error: ""
+    dialogues:
+      - q: "*IDN?"
+        r: "TEKTRONIX,TBS1072B,C010001,FV:v20.04"
+      - q: "ACQ:STATE RUN"
+        r: ""
+      - q: "CH1:CURVE?"
+        r: "0,0,5,5,0,0,5,5,0,0,5,5"
+      - q: "CH2:CURVE?"
+        r: "0,0,0,5,5,5,5,5,5,5,5,5"
+      - q: "CH3:CURVE?"
+        r: "0,0,0,0,5,5,0,0,5,5,0,0"
+      - q: "CH4:CURVE?"
+        r: "0,0,0,0,0,5,5,0,0,5,5,0"
+
+resources:
+  TCPIP0::127.0.0.1::inst0::INSTR:
+    device: MyOscilloscope
