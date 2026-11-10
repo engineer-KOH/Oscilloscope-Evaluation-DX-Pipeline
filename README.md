@@ -34,16 +34,16 @@
 2. **依存ライブラリのインストール**:
    ```bash
    pip install pyvisa pyvisa-sim numpy matplotlib
-
+   ```
 3.仮想デバイス定義（devices.yaml）の確認:
 　ルートフォルダに devices.yaml が配置され、各チャンネル（CH1〜CH4）の応答データ形式が正しく定義されていることを確認します。
 
 👤 2. スクリプトの実行
 　プロジェクトのルートディレクトリから、以下のコマンドを実行します。
 
-  ```bash
-  python src/evaluate_ac_timing.py
-
+   ```bash
+   python src/evaluate_ac_timing.py
+   ```
 📊 3. 実行結果の確認
   ターミナル上にリセット解除エッジの検出ポイントや各種測定マージンが表示され、outputs/ フォルダ内に視覚化された波形画像（ac_timing_evaluation_result.png）が出力されます。
 
