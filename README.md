@@ -41,13 +41,13 @@
 👤 2. スクリプトの実行
 　プロジェクトのルートディレクトリから、以下のコマンドを実行します。
 
-　bash
-　python src/evaluate_ac_timing.py
+  ```bash
+  python src/evaluate_ac_timing.py
 
 📊 3. 実行結果の確認
-　ターミナル上にリセット解除エッジの検出ポイントや各種測定マージンが表示され、outputs/ フォルダ内に視覚化された波形画像（ac_timing_evaluation_result.png）が出力されます。
+  ターミナル上にリセット解除エッジの検出ポイントや各種測定マージンが表示され、outputs/ フォルダ内に視覚化された波形画像（ac_timing_evaluation_result.png）が出力されます。
 
-Plaintext
+```Plaintext
 Scope-Auto-Evaluation-DX/
 ├── devices.yaml                  # 仮想計測器（オシロスコープ）のSCPI応答定義
 ├── inputs/                       # 入力データ・設定ファイル格納フォルダ
