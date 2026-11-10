@@ -47,11 +47,10 @@
 📊 3. 実行結果の確認
   ターミナル上にリセット解除エッジの検出ポイントや各種測定マージンが表示され、outputs/ フォルダ内に視覚化された波形画像（ac_timing_evaluation_result.png）が出力されます。
 
-```Plaintext
-Scope-Auto-Evaluation-DX/
-├── devices.yaml                  # 仮想計測器（オシロスコープ）のSCPI応答定義
-├── inputs/                       # 入力データ・設定ファイル格納フォルダ
-├── outputs/                      # 自動生成される評価グラフ画像 (ac_timing_evaluation_result.png)
-└── src/
-    ├── evaluate_ac_timing.py     # 4ch波形取得 & AC特性（タイミング）評価メイン処理
-    └── test_waveform.py          # 単体波形取得・疎通確認用テストスクリプト
+　　Scope-Auto-Evaluation-DX/
+　　├── devices.yaml                  # 仮想計測器（オシロスコープ）のSCPI応答定義
+　　├── inputs/                       # 入力データ・設定ファイル格納フォルダ
+　　├── outputs/                      # 自動生成される評価グラフ画像 (ac_timing_evaluation_result.png)
+　　└── src/
+　　    ├── evaluate_ac_timing.py     # 4ch波形取得 & AC特性（タイミング）評価メイン処理
+    　　└── test_waveform.py          # 単体波形取得・疎通確認用テストスクリプト
