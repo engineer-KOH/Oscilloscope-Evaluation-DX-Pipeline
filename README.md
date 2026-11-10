@@ -1,0 +1,58 @@
+# 🚀 Scope-Auto-Evaluation-DX
+
+## 📌 概要（Overview）
+・本システムは、ハードウェア非依存の仮想計測器環境（`PyVISA-sim`）を活用し、オシロスコープを用いた4チャンネル波形取得およびAC特性評価（リセット解除後のタイミング評価）を自動化するPythonフレームワークです。  
+・実機（オシロスコープ等）が手元にない段階でも、制御・数値データ処理・自動可視化のパイプラインをローカル環境で完結させ、評価結果およびマルチプロットグラフを `outputs/` フォルダへ自動保存します。
+
+## 🎯 主な目的（Objective）
+- **ハードウェア非依存の評価シミュレーション**: `PyVISA-sim` と `devices.yaml` の定義により、実機が不要な段階から測定・解析プログラムの開発・事前検証を可能化
+
+- **マルチチャネル（4ch）同期データの自動処理**: CLK, RESET, Data-In, Data-Out の4系統の波形データを数値配列化し、リセット解除エッジの自動検出および Setup/Hold Time マージン計算を実現
+
+- **評価レポート作成の自動化・DX化**: 4分割マルチプロットによる時系列波形グラフを自動生成し、解析結果とともに `outputs/` 配下へダイレクト出力
+
+## 🛠️ 使用技術（Tech Stack）
+- **言語・主要ライブラリ**: Python 3.14, NumPy, Matplotlib
+- **計測器制御・シミュレーション**: PyVISA, PyVISA-sim (SCPIコマンド解析 / `devices.yaml` モデリング)
+- **データ解析・可視化**: NumPy (閾値判定 / 立ち上がりエッジ検出), Matplotlib (マルチチャネル波形描画 / 画像保存)
+- **環境構築・バージョン管理**: Git, VS Code, Virtual environment (venv)
+
+## ⚙️ システム構成・処理フロー（Workflow）
+1. **仮想計測器接続**: スクリプト起動時、`devices.yaml` を読み込んだ `PyVISA-sim` バックエンドを介して仮想オシロスコープ (`TCPIP0::127.0.0.1::inst0::INSTR`) へ接続
+
+2. **4ch波形データの取得・一括数値化**: `CH1:CURVE?` 〜 `CH4:CURVE?` のクエリを発行し、カンマ区切りのデータ文字列を取得後、`NumPy` 配列および物理単位（電圧値）へ即時スケーリング変換
+
+3. **タイミング解析エッジ検出**: CH2（RESET信号）の Low → High 立ち上がりエッジ（リセット解除ポイント）を閾値判定によって検出し、基準時間軸を同定
+
+4. **グラフ生成 & 結果の自動保存**: 4分割のマルチプロット波形グラフを `Matplotlib` で生成し、`outputs/ac_timing_evaluation_result.png` として自動書き出し
+
+## 🚀 使い方（Quick Start）
+
+### 💻 1. セットアップ手順
+1. **リポジトリの配置**:
+   作業用ディレクトリにプロジェクトを配置します。
+2. **依存ライブラリのインストール**:
+   ```bash
+   pip install pyvisa pyvisa-sim numpy matplotlib
+   ```
+
+3.仮想デバイス定義（devices.yaml）の確認:  
+　ルートフォルダに devices.yaml が配置され、各チャンネル（CH1〜CH4）の応答データ形式が正しく定義されていることを確認します。
+
+👤 2. スクリプトの実行  
+   プロジェクトのルートディレクトリから、以下のコマンドを実行します。  
+   ```bash
+   python src/evaluate_ac_timing.py   ```
+
+📊 3. 実行結果の確認  
+   ターミナル上にリセット解除エッジの検出ポイントや各種測定マージンが表示され、outputs/ フォルダ内に視覚化された波形画像（ac_timing_evaluation_result.png）が出力されます。
+
+   ```Plaintext
+   Scope-Auto-Evaluation-DX/
+   ├── devices.yaml                  # 仮想計測器（オシロスコープ）のSCPI応答定義
+   ├── inputs/                       # 入力データ・設定ファイル格納フォルダ
+   ├── outputs/                      # 自動生成される評価グラフ画像 (ac_timing_evaluation_result.png)
+   └── src/
+       ├── evaluate_ac_timing.py     # 4ch波形取得 & AC特性（タイミング）評価メイン処理
+       └── test_waveform.py          # 単体波形取得・疎通確認用テストスクリプト
+   ```

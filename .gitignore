@@ -1,0 +1,8 @@
+inputs/*
+!inputs/.gitkeep
+
+outputs/*
+!outputs/.gitkeep
+
+*backends*
+*devices*
